@@ -16,8 +16,6 @@
 - Choose an animation curve to move the object by (linear, curve, etc.)
 - Add in the audio through the plugin instead of the animation timeline
 - Add button to automate the steps between 
-- 
-
 
 ## December 2025
 - Proper Plugin Integration and Release
