@@ -1,4 +1,5 @@
-# Blender 2D Facial Rig Lip-Syncing System
+# Sync Them Lips
+Plugin to automate the lip syncing process for 2d facial rigs in Blender 
 
 # Video Announcement
 [Link to Video](https://youtu.be/NkJSUJaBUz4)
