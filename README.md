@@ -1,5 +1,8 @@
 # Blender 2D Facial Rig Lip-Syncing System
 
+# Video Announcement
+[Link to Video](https://youtu.be/NkJSUJaBUz4)
+
 # How to Use
 1. Open up a graph editor
 2. Click channels -> Sound to Samples
