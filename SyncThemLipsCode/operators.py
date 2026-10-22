@@ -77,3 +77,66 @@ class SYNCTHEMLIPS_OT_bake(bpy.types.Operator):
             self.report({'WARNING'}, msg)
         self.report({'INFO'}, f"Baked {done}/{len(names)} voicelines onto '{track.name}'")
         return {'FINISHED'} if done else {'CANCELLED'}
+
+
+class SYNCTHEMLIPS_OT_clear(bpy.types.Operator):
+    bl_idname = "sync_them_lips.clear_voicelines"
+    bl_label = "Clear Voicelines"
+    bl_description = "Delete every generated strip, action and audio strip so you can redo the voicelines"
+    bl_options = {'REGISTER', 'UNDO'}
+
+    @staticmethod
+    def _our_tracks(context):
+        ob = context.active_object
+        if not (ob and ob.type == 'ARMATURE' and ob.animation_data):
+            return []
+        name = context.scene.sync_them_lips.track_name
+        return [
+            t for t in ob.animation_data.nla_tracks
+            if t.name == name
+            or any(st.action and st.action.get("sync_them_lips") for st in t.strips)
+        ]
+
+    @classmethod
+    def poll(cls, context):
+        if not cls._our_tracks(context):
+            cls.poll_message_set("No Sync Them Lips track found on the active armature")
+            return False
+        return True
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_confirm(
+            self, event,
+            title="Clear all voicelines?",
+            message="This deletes every strip and action on the track. Ctrl+Z can undo it.",
+            confirm_text="Delete",
+            icon='WARNING',
+        )
+
+    def execute(self, context):
+        scene = context.scene
+        anim = context.active_object.animation_data
+        tracks = self._our_tracks(context)
+
+        actions = {st.action for t in tracks for st in t.strips if st.action}
+        for track in tracks:
+            for st in list(track.strips):
+                track.strips.remove(st)
+            anim.nla_tracks.remove(track)
+
+        removed_actions = 0
+        for act in actions:
+            if act.users == 0:
+                bpy.data.actions.remove(act)
+                removed_actions += 1
+
+        removed_audio = 0
+        seq = scene.sequence_editor
+        if seq:
+            coll = seq.strips if hasattr(seq, "strips") else seq.sequences
+            for st in [s for s in coll if s.get("sync_them_lips")]:
+                coll.remove(st)
+                removed_audio += 1
+
+        self.report({'INFO'}, f"Cleared {removed_actions} actions and {removed_audio} audio strips")
+        return {'FINISHED'}

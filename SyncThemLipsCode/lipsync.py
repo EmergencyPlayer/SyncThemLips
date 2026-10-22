@@ -6,6 +6,7 @@ import bpy
 def build_action(arm, bone_name, axis, name, targets, interpolation):
     """Create a slotted Action containing one location F-curve, keys at 0..N."""
     action = bpy.data.actions.new(name)
+    action["sync_them_lips"] = True
     slot = action.slots.new('OBJECT', arm.name)
     layer = action.layers.new("Layer")
     strip = layer.strips.new(type='KEYFRAME')
@@ -49,4 +50,6 @@ def push_to_track(track, action, slot, name, start):
 def add_sound_strip(scene, filepath, name, start):
     seq = scene.sequence_editor_create()
     coll = seq.strips if hasattr(seq, "strips") else seq.sequences
-    return coll.new_sound(name, filepath, 1, int(start))
+    strip = coll.new_sound(name, filepath, 1, int(start))
+    strip["sync_them_lips"] = True
+    return strip

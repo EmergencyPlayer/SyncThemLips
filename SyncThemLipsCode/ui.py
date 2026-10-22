@@ -41,3 +41,5 @@ class SYNCTHEMLIPS_PT_panel(bpy.types.Panel):
         box.prop(s, "extend_scene_end")
 
         layout.operator("sync_them_lips.bake_voicelines", icon='SOUND')
+        layout.separator(factor=2.0)
+        layout.operator("sync_them_lips.clear_voicelines", icon='TRASH')

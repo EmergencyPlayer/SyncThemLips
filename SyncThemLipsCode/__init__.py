@@ -5,6 +5,7 @@ from . import operators, properties, ui
 _classes = (
     properties.SyncThemLipsSettings,
     operators.SYNCTHEMLIPS_OT_bake,
+    operators.SYNCTHEMLIPS_OT_clear,
     ui.SYNCTHEMLIPS_PT_panel,
 )
 
