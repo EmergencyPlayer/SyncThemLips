@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+id = "sync_them_lips"
+version = "1.0.0"
+name = "Sync Them Lips"
+tagline = "Bake audio files into back-to-back NLA mouth-flap strips"
+maintainer = "Emergency Player"
+type = "add-on"
+blender_version_min = "5.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+
+[permissions]
+files = "Read the audio files you choose"
