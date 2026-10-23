@@ -2,7 +2,7 @@
 A Blender Add-On to allow users to add in voicelines and automate the lipsyncing process for 2D facial rigs in Blender.
 
 # Video Demonstration
-(Coming soon)
+[Automate Lip-Syncing | My FREE Blender Add-on](https://youtu.be/oSr1VXfAI1g)
 
 # How to Use
 1. Download SyncThemLips.zip OR download the SyncThemLipsCode Folder and zip it
